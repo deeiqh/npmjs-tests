@@ -11,4 +11,9 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Grp
+  getHelloo(): string {
+    return this.appService.getHello();
+  }
 }

@@ -1,8 +1,11 @@
+import { ApolloDriver } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
 import { Transport } from '@nestjs/microservices';
 import { redisStore } from 'cache-manager-redis-store';
 import { CommonModule } from 'otp-guards';
 import { AppController } from './app.controller';
+import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 @Module({
   imports: [
@@ -22,8 +25,12 @@ import { AppService } from './app.service';
         },
       },
     }),
+    GraphQLModule.forRoot({
+      driver: ApolloDriver,
+      autoSchemaFile: 'src/schema.gql',
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}
